@@ -10,7 +10,7 @@ namespace ConsoleApp1
     public abstract class Character
     {
         //데미지 받는 메서드
-        public abstract void ReceiveDamage(int damage, DamageType damageType);
+        public abstract bool ReceiveDamage(int damage, DamageType damageType);
         //공격 하는 메서드
         public abstract void Attack(Character target);
         //죽었는지 아닌지 판별하는 메서드

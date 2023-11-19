@@ -9,7 +9,8 @@ namespace ConsoleApp1
 {
     public class Dungeon
     {
-        public static void DisplayDungeon()
+        //Program program = new Program();
+        public void DisplayDungeon()
         {
             Console.Clear();
             Console.ForegroundColor = ConsoleColor.Magenta;

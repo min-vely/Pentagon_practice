@@ -1,15 +1,17 @@
-﻿using System;
+﻿using ConsoleApp1;
+using EnumsNamespace;
+using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
+//using static System.Formats.Asn1.AsnWriter;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace ConsoleApp1
 {
-    internal class Program
+    public class Program
     {
         public static Player player1;
+        public static Monster monster;
+
         public static void DisplayGameIntro()
         {
             Console.Clear();
@@ -29,8 +31,8 @@ namespace ConsoleApp1
             switch (input)
             {
                 case 1:
-                    Console.WriteLine("상태를 보여주는 메서드를 넣어주세요.");
                     player1.DisplayMyInfo();
+                    //Console.WriteLine("상태를 보여주는 메서드를 넣어주세요.");
                     break;
 
                 case 2:
@@ -40,8 +42,8 @@ namespace ConsoleApp1
                     Console.WriteLine("상점을 보여주는 메서드를 넣어주세요.");
                     break;
                 case 4:
-                    Console.WriteLine("던전을 보여주는 메서드를 넣어주세요.");
-                    player1.UseSkill();
+                    player1.TempBattle();
+                    //Console.WriteLine("던전을 보여주는 메서드를 넣어주세요.");
                     break;
             }
         }
@@ -74,31 +76,27 @@ namespace ConsoleApp1
             Console.WriteLine();
             Console.Write(">>");
 
-            Player p1;
             int input = CheckValidInput(1, 4);
 
             if (input % 4 == 1)
             {
-                p1 = new Warrior(nickname);
-                return p1;
+                player1 = new Warrior(nickname);
+                return player1;
             }
             else if (input % 4 == 2)
             {
-                //p1 = new Mage(nickname);
-                p1 = new Warrior(nickname);
-                return p1;
+                //player1 = new Mage(nickname);
+                return player1;
             }
             else if (input == 3)
             {
-                //p1 = new Thief(nickname);
-                p1 = new Warrior(nickname);
-                return p1;
+                //player1 = new Thief(nickname);
+                return player1;
             }
             else
             {
-                //p1 = new Archer(nickname);
-                p1 = new Warrior(nickname);
-                return p1;
+                //player1 = new Archer(nickname);
+                return player1;
             }
         }
 
@@ -124,6 +122,7 @@ namespace ConsoleApp1
 
         static void Main()
         {
+            //DataManager.Instance.InitializeMonsterDict();
             string nickname = SetNickname();
             player1 = ChoiceJob(nickname);
             DisplayGameIntro();

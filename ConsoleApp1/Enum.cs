@@ -12,6 +12,15 @@ namespace EnumsNamespace
         DT_Skill,
     }
 
+    public enum StageType
+    {
+        ST_One,
+        ST_Two,
+        ST_Three,
+        ST_Four,
+        ST_Five,
+    }
+
     public enum JobType
     {
         JT_Warrior,
