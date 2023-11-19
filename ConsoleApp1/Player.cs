@@ -26,6 +26,8 @@ namespace ConsoleApp1
 
         // Attack() 메서드에서 10% 오차를 이용해 계산되는 최종 공격 데미지
         public int randomDamage;
+        // 치명타 확률에 대한 상수(15%)
+        public const int CriticalHitChance = 15;
 
         public int _level = 1;
         public int _mp;
@@ -84,6 +86,7 @@ namespace ConsoleApp1
         {
             _name = name;
             _mp = 30;
+            // 랜덤 데미지 초기화(안 적으면 기본 공격력으로 고정됨)
             randomDamage = 0;
 
             // 생성자에서 초기화
@@ -178,9 +181,7 @@ namespace ConsoleApp1
             Monster selectedMonster = monsters[randomMonsterIndex];
 
             // 플레이어가 선택한 몬스터 공격
-            int damage = Program.player1.AttackDamage;
             Attack(selectedMonster);
-            //selectedMonster.ReceiveDamage(damage, DamageType.DT_Normal);
 
             Console.Clear();
             Console.WriteLine($"{_name}이(가) {selectedMonster.Name}에게 기본 공격을 사용하여 {Program.player1.randomDamage}의 데미지를 입혔습니다.\n");
@@ -518,13 +519,27 @@ namespace ConsoleApp1
         public override void Attack(Character target)
         {
             Random random = new Random();
+
+            // 15% 확률로 치명타 여부 확인
+            bool isCriticalHit = random.Next(1, 101) <= CriticalHitChance;
+
+            // 10%의 오차 범위 내에서 기본 공격력 계산
             int damageErrorRange = Convert.ToInt32(Math.Ceiling(Program.player1.AttackDamage / 10.0f));
 
             int minDamage = Program.player1.AttackDamage - damageErrorRange;
             int maxDamage = Program.player1.AttackDamage + damageErrorRange;
 
             randomDamage = random.Next(minDamage, maxDamage);
-            
+
+            // 치명타인 경우 데미지를 정상 데미지의 160%로 계산
+            if (isCriticalHit)
+            {
+                randomDamage = (int)(randomDamage * 1.6f);
+                Console.Clear();
+                Console.WriteLine("치명타 발동!!!!!!\n");
+                Thread.Sleep(1500);
+            }
+
             target.ReceiveDamage(randomDamage, DamageType.DT_Normal);
         }
 
